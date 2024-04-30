@@ -69,8 +69,7 @@ function buildTree(arr) {
     var end = arr.length
 
     if (arr.length < 2) {
-        var node = new Node(arr)
-        return node
+        return null
     }
 
     var mid = Math.ceil((start + end) / 2)
@@ -102,7 +101,8 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 let nums = [1,5,6,788,345,1456,22,33,45,1,12]
 let firstTest = new Tree(nums)
 
-console.log(firstTest.root)
+// console.log(firstTest.root)
+console.log(prettyPrint(firstTest.root))
 
 // function buildTree(arr, start, end) {
 
