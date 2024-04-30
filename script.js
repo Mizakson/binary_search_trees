@@ -48,6 +48,30 @@ class Tree {
         }
 
     }
+
+
+    // delete(value) {
+    //     // 3 cases
+    //     // 1. delete a leaf in the tree
+    //     // 2. delete a node with one child
+    //     // 3. delete a node with two children
+
+    // }
+
+
+    find(value) {
+        return this.findNode(this.root, value)
+    }
+
+    findNode(node, value) {
+        if (!node) return null
+
+        if (value < node.data) return this.findNode(node.left, value)
+        else if (value > node.data) return this.findNode(node.right, value)
+        else return node
+
+    }
+
 }
 
 
@@ -138,3 +162,4 @@ let firstTest = new Tree(nums)
 // prettyPrint(firstTest.root) shows balanced BST
 // console.log(firstTest.insert(8))
 // console.log(firstTest.insert(2567))
+// console.log(firstTest.find(33))
