@@ -15,6 +15,39 @@ class Tree {
         this.root = buildTree(this.a)
     }
     
+
+    insert(value) {
+        var node = new Node(value)
+
+        if (this.root === null) {
+            this.root = node
+            return this
+        }
+
+        let current = this.root
+        while(current) {
+            
+            if(current.data === value) return 
+        
+            if (value < current.data) {
+                if (current.left === null) {
+                    current.left = node
+                    return this
+                }
+                current = current.left
+            }
+
+            if (value > current.data) {
+                if (current.right === null) {
+                    current.right = node
+                    return this
+                }
+                current = current.right
+            }
+
+        }
+
+    }
 }
 
 
@@ -63,6 +96,7 @@ function merge(l, r) {
 
 }
 
+
 function buildTree(arr) {
 
     var start = 0
@@ -83,7 +117,6 @@ function buildTree(arr) {
 }
 
 
-
 function prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -102,18 +135,6 @@ let nums = [1,5,6,788,345,1456,22,33,45,1,12]
 let firstTest = new Tree(nums)
 
 // console.log(firstTest.root)
-console.log(prettyPrint(firstTest.root))
-
-// function buildTree(arr, start, end) {
-
-//     if (start > end) return null
-
-//     var mid = (start + end) / 2
-//     var node = new Node(arr[mid])
-
-//     node.left = buildTree(arr, start, mid - 1)
-//     node.right = buildTree(arr, mid + 1, end)
-
-//     return node
-
-// }
+// prettyPrint(firstTest.root) shows balanced BST
+// console.log(firstTest.insert(8))
+// console.log(firstTest.insert(2567))
