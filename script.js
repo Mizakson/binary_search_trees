@@ -11,11 +11,11 @@ class Node {
 
 class Tree {
     constructor(arr) {
-        this.arr = arr
-        this.root = null
+        this.a = mergeSort(arr)
+        this.root = buildTree(this.a)
     }
+    
 }
-
 
 
 // 3 helper functions
@@ -63,10 +63,26 @@ function merge(l, r) {
 
 }
 
-
 function buildTree(arr) {
-    return null  
-  }
+
+    var start = 0
+    var end = arr.length
+
+    if (arr.length < 2) {
+        var node = new Node(arr)
+        return node
+    }
+
+    var mid = Math.ceil((start + end) / 2)
+    var node = new Node(arr[mid])
+
+    node.left = buildTree(arr.slice(arr, mid))
+    node.right = buildTree(arr.slice(mid))
+
+    return node
+
+}
+
 
 
 function prettyPrint(node, prefix = "", isLeft = true) {
@@ -83,8 +99,10 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   };
 
 
-let tester = [1,5,6,788,345,1456,22,33,45,1,12]
+let nums = [1,5,6,788,345,1456,22,33,45,1,12]
+let firstTest = new Tree(nums)
 
+console.log(firstTest.root)
 
 // function buildTree(arr, start, end) {
 
@@ -99,5 +117,3 @@ let tester = [1,5,6,788,345,1456,22,33,45,1,12]
 //     return node
 
 // }
-
-console.log(mergeSort(tester))
