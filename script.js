@@ -15,60 +15,25 @@ class Tree {
         this.root = buildTree(this.a)
     }
     
-
+    
     insert(value) {
-        var node = new Node(value)
-
-        if (this.root === null) {
-            this.root = node
-            return this
-        }
-
-        let current = this.root
-        while(current) {
-            
-            if(current.data === value) return 
-        
-            if (value < current.data) {
-                if (current.left === null) {
-                    current.left = node
-                    return this
-                }
-                current = current.left
-            }
-
-            if (value > current.data) {
-                if (current.right === null) {
-                    current.right = node
-                    return this
-                }
-                current = current.right
-            }
-
-        }
-
+        this.root = this.recursiveInsert(this.root, value)
     }
 
 
-    // delete(value) {
-    //     // 3 cases
-    //     // 1. delete a leaf in the tree
-    //     // 2. delete a node with one child
-    //     // 3. delete a node with two children
+    recursiveInsert(root, value) {
+        if (root == null) {
+            root = new Node(value)
+            return root
+        }
 
-    // }
+        if (value < root.data) root.left = this.recursiveInsert(root.left, value) 
+        else if (value > root.data) root.right = this.recursiveInsert(root.right, value)
 
-
-    find(value) {
-        return this.findNode(this.root, value)
+        return root
     }
 
-    findNode(node, value) {
-        if (!node) return null
-
-        if (value < node.data) return this.findNode(node.left, value)
-        else if (value > node.data) return this.findNode(node.right, value)
-        else return node
+    deleteItem(value) {
 
     }
 
@@ -158,8 +123,5 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 let nums = [1,5,6,788,345,1456,22,33,45,1,12]
 let firstTest = new Tree(nums)
 
-// console.log(firstTest.root)
-// prettyPrint(firstTest.root) shows balanced BST
-// console.log(firstTest.insert(8))
-// console.log(firstTest.insert(2567))
-// console.log(firstTest.find(33))
+// firstTest.insert(36)
+// prettyPrint(firstTest.root)
