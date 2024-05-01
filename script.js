@@ -34,7 +34,44 @@ class Tree {
     }
 
     deleteItem(value) {
+        this.root = this.recursiveDelete(this.root, value)
+    }
 
+
+    recursiveDelete(root, value) {
+        // base case
+        if (root == null) return root
+
+        // check which subtree value goes into (left | right)
+        if (value < root.data) root.left = this.recursiveDelete(root.left, value)
+        else if (value > root.data) root.right = this.recursiveDelete(root.right, value)
+
+        // delete node if root.data === value
+        else {
+            // one or no children
+            if (root.left === null) return root.right
+            else if (root.right === null) return root.left
+
+            // node with two children -- inorder successor (smallest in right subtree) (see geeksforgeeks article)
+            root.data = this.minValue(root.right)
+            
+            // delete inorder successor
+            root.right = this.recursiveDelete(root.right, root.data)
+
+        }
+
+        return root
+
+    }
+
+
+    minValue(node) {
+        let min = node.data
+        while(node.left !== null) {
+            min = node.left.data
+            node = node.left
+        }
+        return min
     }
 
 }
@@ -124,4 +161,5 @@ let nums = [1,5,6,788,345,1456,22,33,45,1,12]
 let firstTest = new Tree(nums)
 
 // firstTest.insert(36)
+// firstTest.deleteItem(33)
 // prettyPrint(firstTest.root)
