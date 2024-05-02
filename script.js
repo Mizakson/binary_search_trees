@@ -90,6 +90,41 @@ class Tree {
 
     }
 
+
+    levelOrder(callback) {
+
+        let q = [this.root]
+
+        if (callback) {
+            let newArr = []
+            while (q.length != 0) {
+                let node = q.pop()
+                let newNode = callback(node.data)
+                node.data = newNode
+                newArr.push(newNode)
+                if (node.left) q.unshift(node.left)
+                if (node.right) q.unshift(node.right)
+            }
+            return newArr
+        }
+
+
+        else {
+            let defaultArr = []
+            while (q.length != 0) {
+                let node = q.pop()
+                defaultArr.push(node.data)
+                if (node.left) q.unshift(node.left)
+                if (node.right) q.unshift(node.right)
+            }
+            return defaultArr
+        }
+
+
+        
+    }
+
+
 }
 
 
@@ -173,10 +208,13 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   };
 
 
+var addTwo = function(value) { return value + 2 }
+
 let nums = [4,5,6,788,345,1476,22,33,49,123]
 let firstTest = new Tree(nums)
 
 // firstTest.insert(36)
 // firstTest.deleteItem(33)
 // console.log(firstTest.find(345))
-// prettyPrint(firstTest.root)
+// console.log(firstTest.levelOrder(addTwo))
+prettyPrint(firstTest.root)
