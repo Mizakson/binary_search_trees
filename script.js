@@ -74,6 +74,22 @@ class Tree {
         return min
     }
 
+
+    find(value) {
+        return this.recursiveFind(this.root, value)
+    }
+
+
+    recursiveFind(node, value) {
+        if (node == null) return null
+        if (node.data == value) return node
+        if (node.data != value) {
+            if (value < node.data) return this.recursiveFind(node.left, value)
+            else if (value > node.data) return this.recursiveFind(node.right, value)
+        }
+
+    }
+
 }
 
 
@@ -157,9 +173,10 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   };
 
 
-let nums = [1,5,6,788,345,1456,22,33,45,1,12]
+let nums = [4,5,6,788,345,1476,22,33,49,123]
 let firstTest = new Tree(nums)
 
 // firstTest.insert(36)
 // firstTest.deleteItem(33)
+// console.log(firstTest.find(345))
 // prettyPrint(firstTest.root)
