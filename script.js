@@ -207,6 +207,7 @@ class Tree {
         var current = this.root
         var s1 = []
         var s2 = []
+        var final = []
 
         s1.push(current)
 
@@ -233,7 +234,12 @@ class Tree {
             }
         }
 
-        return s2
+        while (s2.length > 0) {
+            var temp = s2.pop()
+            final.push(temp)
+        }
+
+        return final
 
     }
 
@@ -299,11 +305,6 @@ class Tree {
         return this.balanceChecker(root.left) && this.balanceChecker(root.right)
     }
 
-    rebalance() {
-        var newArr = this.preOrder()
-        var newTree = new Tree(newArr)
-        prettyPrint(newTree.root)
-    }
 
 }
 
@@ -388,8 +389,57 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   };
 
 
-var addTwo = function(value) { return value + 2 }
+function rebalance(tree) {
+    if (!tree.isBalanced()) {
+        let newArr = tree.preOrder()
+        let newTree = new Tree(newArr)
+        return newTree
+    }
+    else return "tree already balanced"
+}
 
-let nums = [25,14,23,7,9,16,18,55,35,33,27,75,65,62,78,94,99]
-let firstTest = new Tree(nums)
+// var addTwo = function(value) { return value + 2 }
 
+// driver script
+function randomArr() {
+    var arr = []
+    for (let i = 0; i < 10; i++) {
+        arr.push(Math.floor(Math.random() * 100) + 1)
+    }
+    return removeDuplicates(arr)
+}
+
+// step 1 -- create balanced BST from random nums < 100
+const driverTree = new Tree(randomArr())
+
+// step 2 -- check if tree is balanced
+// console.log(driverTree.isBalanced()) true
+
+// step 3 -- print in level, pre, post, and inOrder
+// console.log(driverTree.levelOrder())
+// console.log(driverTree.preOrder())
+// console.log(driverTree.postOrder())
+// console.log(driverTree.inOrder())
+
+// step 4 -- unbalance tree (add some numbers > 100)
+driverTree.insert(105)
+driverTree.insert(110)
+driverTree.insert(325)
+driverTree.insert(647)
+driverTree.insert(1124)
+
+// step -- 5 confirm tree is unbalanced
+// console.log(driverTree.isBalanced()) false
+
+// step 6 -- balance tree by calling rebalance
+const rebalancedDriverTree = rebalance(driverTree)
+
+// step 7 -- confirm that tree is balanced
+// console.log(rebalancedDriverTree.isBalanced()) true
+
+// step 8 -- print out all elements in level, pre, post, and inOrder
+prettyPrint(rebalancedDriverTree.root)
+console.log(rebalancedDriverTree.levelOrder())
+console.log(rebalancedDriverTree.preOrder())
+console.log(rebalancedDriverTree.postOrder())
+console.log(rebalancedDriverTree.inOrder())
