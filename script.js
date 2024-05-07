@@ -125,6 +125,117 @@ class Tree {
     }
 
 
+    preOrder(callback) {
+        // root -> left -> right
+        var stack = [this.root]
+        var traversed = []
+        let current
+
+        if (callback) {
+            while (stack.length != 0) {
+                current = stack.pop()
+                let newCurrent = callback(current.data)
+                current.data = newCurrent
+                traversed.push(current.data)
+
+                if (current.right) stack.push(current.right)
+                if (current.left) stack.push(current.left)
+            }
+            return traversed
+        }
+
+        else {
+            while (stack.length != 0) {
+                current = stack.pop()
+                traversed.push(current.data)
+
+                if (current.right) stack.push(current.right)
+                if (current.left) stack.push(current.left)
+            }
+            return traversed
+        }
+
+    }
+
+
+    inOrder(callback) {
+        // left -> root -> right
+        var stack = []
+        var traversed = []
+        let current = this.root
+
+
+        if (callback) {
+            while (stack.length || current) {
+                while(current) {
+                    stack.push(current)
+                    current = current.left
+                }
+                current = stack.pop()
+                let newData = callback(current.data)
+                current.data = newData
+    
+                traversed.push(newData)
+                current = current.right
+            }
+
+            // for (let i = 0; i < traversed.length; i++) {
+            //     callback(traversed[i].data)
+            // }
+            return traversed
+        }
+
+        else {
+            while (stack.length || current) {
+                while(current) {
+                    stack.push(current)
+                    current = current.left
+                }
+                current = stack.pop()
+                traversed.push(current.data)
+                current = current.right
+            }
+            return traversed
+        }
+
+    }
+
+
+    postOrder(callback) {
+        // left -> right -> root
+        var current = this.root
+        var s1 = []
+        var s2 = []
+
+        s1.push(current)
+
+        if (callback) {
+            while (s1.length > 0) {
+                var temp = s1.pop()
+                let data = temp.data
+                temp.data = callback(data)
+                s2.push(temp.data)
+
+                if (temp.left != null) s1.push(temp.left)
+                if (temp.right != null) s1.push(temp.right)
+            }
+
+        }
+
+        else {
+            while (s1.length > 0) {
+                var temp = s1.pop()
+                s2.push(temp.data)
+
+                if (temp.left != null) s1.push(temp.left)
+                if (temp.right != null) s1.push(temp.right)
+            }
+        }
+
+        return s2
+
+    }
+
 }
 
 
@@ -210,11 +321,17 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 
 var addTwo = function(value) { return value + 2 }
 
-let nums = [4,5,6,788,345,1476,22,33,49,123]
+let nums = [5,6,788,345,1476,22,33,49,123]
 let firstTest = new Tree(nums)
 
 // firstTest.insert(36)
 // firstTest.deleteItem(33)
 // console.log(firstTest.find(345))
 // console.log(firstTest.levelOrder(addTwo))
-prettyPrint(firstTest.root)
+// console.log(firstTest.preOrder(addTwo))
+// console.log(firstTest.preOrder())
+// console.log(firstTest.inOrder())
+// console.log(firstTest.inOrder(addTwo))
+// console.log(firstTest.postOrder())
+// console.log(firstTest.postOrder(addTwo))
+// prettyPrint(firstTest.root)
