@@ -33,6 +33,7 @@ class Tree {
         return root
     }
 
+
     deleteItem(value) {
         this.root = this.recursiveDelete(this.root, value)
     }
@@ -236,6 +237,72 @@ class Tree {
 
     }
 
+
+    height(node) {
+        /* 
+        height - the number of edges in the longest path
+        from a given node to a leaf node
+        */
+
+        if (this.find(node)) {
+            return this.findHeight(this.root, this.find(node).data)
+        }
+
+        else if (!this.find(node)) {
+            return "node not in tree"
+        }
+
+    }
+
+
+    findHeight(root, x) {
+        // base
+        var defaultHeight = -1
+        if (root == null) return -1
+
+        var leftHeight = this.findHeight(root.left, x)
+        var rightHeight = this.findHeight(root.right, x)
+
+        var answer = Math.max(leftHeight, rightHeight) + 1
+
+        if (root.data == x) {
+            defaultHeight = answer
+        }
+
+        return answer
+
+    }
+
+
+    depth(node) {
+        /* 
+        depth - the number of edges in a path from a given
+        node to the tree's root node
+        */
+
+        if (this.find(node)) {
+            return this.findDepth(this.root, this.find(node).data)
+        }
+
+        else if (!this.find(node)) {
+            return "node not in tree"
+        }
+
+    }
+
+
+    findDepth(root, x) {
+        // base
+        if (root == null) return -1
+
+        var dist = -1
+
+        if ( (root.data) == x || (dist = this.findDepth(root.left, x)) >= 0 ||
+           (dist = this.findDepth(root.right, x)) >= 0 ) return dist + 1
+        
+        return dist
+    }
+
 }
 
 
@@ -321,12 +388,12 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 
 var addTwo = function(value) { return value + 2 }
 
-let nums = [5,6,788,345,1476,22,33,49,123]
+let nums = [25,14,23,7,9,16,18,55,35,33,27,75,65,62,78]
 let firstTest = new Tree(nums)
 
 // firstTest.insert(36)
 // firstTest.deleteItem(33)
-// console.log(firstTest.find(345))
+// console.log(firstTest.find())
 // console.log(firstTest.levelOrder(addTwo))
 // console.log(firstTest.preOrder(addTwo))
 // console.log(firstTest.preOrder())
@@ -334,4 +401,8 @@ let firstTest = new Tree(nums)
 // console.log(firstTest.inOrder(addTwo))
 // console.log(firstTest.postOrder())
 // console.log(firstTest.postOrder(addTwo))
+// console.log(firstTest.height(55)) 3
+// console.log(firstTest.height(400))
+// console.log(firstTest.depth(55)) 2
+// console.log(firstTest.depth(400))
 // prettyPrint(firstTest.root)
