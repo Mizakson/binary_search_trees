@@ -244,34 +244,14 @@ class Tree {
         from a given node to a leaf node
         */
 
-        if (this.find(node)) {
-            return this.findHeight(this.root, this.find(node).data)
-        }
+        if (node === null) return 0
 
-        else if (!this.find(node)) {
-            return "node not in tree"
-        }
+        const leftHeight = this.height(node.left)
+        const rightHeight = this.height(node.right)
+        return Math.max(leftHeight, rightHeight) + 1
 
     }
 
-
-    findHeight(root, x) {
-        // base
-        var defaultHeight = -1
-        if (root == null) return -1
-
-        var leftHeight = this.findHeight(root.left, x)
-        var rightHeight = this.findHeight(root.right, x)
-
-        var answer = Math.max(leftHeight, rightHeight) + 1
-
-        if (root.data == x) {
-            defaultHeight = answer
-        }
-
-        return answer
-
-    }
 
 
     depth(node) {
@@ -301,6 +281,28 @@ class Tree {
            (dist = this.findDepth(root.right, x)) >= 0 ) return dist + 1
         
         return dist
+    }
+
+
+    isBalanced() {
+        return this.balanceChecker(this.root)
+    }
+
+    balanceChecker(root) {
+        if (root == null) return true
+
+        const leftHeight = this.height(root.left)
+        const rightHeight = this.height(root.right)
+        const diff = Math.abs(leftHeight - rightHeight)
+        if (diff > 1) return false
+
+        return this.balanceChecker(root.left) && this.balanceChecker(root.right)
+    }
+
+    rebalance() {
+        var newArr = this.preOrder()
+        var newTree = new Tree(newArr)
+        prettyPrint(newTree.root)
     }
 
 }
@@ -388,21 +390,6 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 
 var addTwo = function(value) { return value + 2 }
 
-let nums = [25,14,23,7,9,16,18,55,35,33,27,75,65,62,78]
+let nums = [25,14,23,7,9,16,18,55,35,33,27,75,65,62,78,94,99]
 let firstTest = new Tree(nums)
 
-// firstTest.insert(36)
-// firstTest.deleteItem(33)
-// console.log(firstTest.find())
-// console.log(firstTest.levelOrder(addTwo))
-// console.log(firstTest.preOrder(addTwo))
-// console.log(firstTest.preOrder())
-// console.log(firstTest.inOrder())
-// console.log(firstTest.inOrder(addTwo))
-// console.log(firstTest.postOrder())
-// console.log(firstTest.postOrder(addTwo))
-// console.log(firstTest.height(55)) 3
-// console.log(firstTest.height(400))
-// console.log(firstTest.depth(55)) 2
-// console.log(firstTest.depth(400))
-// prettyPrint(firstTest.root)
